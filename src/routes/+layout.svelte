@@ -59,7 +59,8 @@
 				<Button href="/matches/new" class="hidden lg:inline-flex">+ Registrar partida</Button>
 				<a
 					class="rounded-2xl px-4 py-3 font-bold text-agp-muted hover:bg-red-50 hover:text-red-700"
-					href="/logout">Sair</a
+					href="/logout"
+					data-sveltekit-reload>Sair</a
 				>
 			{:else}
 				<Button href="/login">Entrar</Button>
