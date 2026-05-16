@@ -1,7 +1,7 @@
 import { db } from '$lib/server/db';
 import { users, type User } from '$lib/server/db/schema';
 import { redirect, type RequestEvent } from '@sveltejs/kit';
-import { eq } from 'drizzle-orm';
+import { eq, or } from 'drizzle-orm';
 
 const cookieName = 'guris_user_id';
 
@@ -37,18 +37,25 @@ export async function upsertLocalUser(input: {
 	name?: string | null;
 	avatarUrl?: string | null;
 }) {
-	const [user] = await db
-		.insert(users)
-		.values(input)
-		.onConflictDoUpdate({
-			target: users.workosUserId,
-			set: {
+	const existingUser = await db.query.users.findFirst({
+		where: or(eq(users.workosUserId, input.workosUserId), eq(users.email, input.email))
+	});
+
+	if (existingUser) {
+		const [user] = await db
+			.update(users)
+			.set({
+				workosUserId: input.workosUserId,
 				email: input.email,
 				name: input.name,
 				avatarUrl: input.avatarUrl,
 				updatedAt: new Date()
-			}
-		})
-		.returning();
+			})
+			.where(eq(users.id, existingUser.id))
+			.returning();
+		return user;
+	}
+
+	const [user] = await db.insert(users).values(input).returning();
 	return user;
 }
