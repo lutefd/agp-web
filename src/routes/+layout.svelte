@@ -25,7 +25,11 @@
 		<nav
 			class="mx-auto flex max-w-[92rem] flex-wrap items-center gap-3 px-4 py-3 lg:gap-4 lg:px-10 lg:py-5"
 		>
-			<a class="mr-auto flex min-w-0 items-center gap-3" href="/leaderboard" aria-label="AGP">
+			<a
+				class="mr-auto flex min-w-0 items-center gap-3"
+				href={data.user ? '/leaderboard' : '/'}
+				aria-label="AGP"
+			>
 				<img
 					class="h-11 w-11 shrink-0 object-contain lg:h-14 lg:w-14"
 					src="/logo/agp-no-bg.png"
