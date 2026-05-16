@@ -26,14 +26,11 @@
 			class="mx-auto flex max-w-[92rem] flex-wrap items-center gap-3 px-4 py-3 lg:gap-4 lg:px-10 lg:py-5"
 		>
 			<a class="mr-auto flex min-w-0 items-center gap-3" href="/leaderboard" aria-label="AGP">
-				<span
-					class="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-agp-green text-xl font-black text-white lg:h-14 lg:w-14 lg:text-2xl"
-				>
-					A
-					<span
-						class="absolute -bottom-1 -right-1 h-4 w-4 rounded-full border-4 border-agp-gold bg-agp-ink"
-					></span>
-				</span>
+				<img
+					class="h-11 w-11 shrink-0 object-contain lg:h-14 lg:w-14"
+					src="/logo/agp-no-bg.png"
+					alt=""
+				/>
 				<span class="min-w-0">
 					<span class="block font-serif text-2xl font-black leading-none text-agp-ink lg:text-3xl"
 						>AGP</span
