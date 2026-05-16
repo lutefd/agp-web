@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { formatDate, formatStatus } from '$lib/format';
 	let { data } = $props();
-	const name = (id) => data.members.find((m) => m.id === id)?.displayName ?? 'Jogador';
+	const name = (id: string) => data.members.find((m) => m.id === id)?.displayName ?? 'Jogador';
 </script>
 
 <section class="mx-auto max-w-3xl space-y-6 rounded-3xl bg-white p-6 shadow-sm">
