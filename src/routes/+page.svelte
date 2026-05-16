@@ -56,7 +56,7 @@
 						>L</span
 					>
 					<div>
-						<b>Luis venceu Kdinho</b>
+						<b>Pietro venceu Kdinho</b>
 						<p class="text-sm text-agp-muted">6-4 3-6 10-8</p>
 					</div>
 					<span class="font-black text-agp-green">+18</span>
@@ -67,8 +67,8 @@
 						>J</span
 					>
 					<div>
-						<b>João reportou vitória</b>
-						<p class="text-sm text-agp-muted">Rafa precisa confirmar</p>
+						<b>Kdinho reportou vitória</b>
+						<p class="text-sm text-agp-muted">Leo precisa confirmar</p>
 					</div>
 					<span class="font-black text-orange-600">pendente</span>
 				</div>
