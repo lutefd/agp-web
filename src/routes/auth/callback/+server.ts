@@ -1,4 +1,6 @@
 import { setUserSession, upsertLocalUser } from '$lib/server/auth/require-user';
+import { getCurrentLeague } from '$lib/server/domain/leagues/get-current-league';
+import { ensureLeagueMembership } from '$lib/server/domain/leagues/invitations';
 import { getWorkos } from '$lib/server/auth/workos';
 import { env } from '$env/dynamic/private';
 import { error, redirect } from '@sveltejs/kit';
@@ -19,6 +21,8 @@ export const GET = async (event) => {
 		name: [profile.firstName, profile.lastName].filter(Boolean).join(' ') || profile.email,
 		avatarUrl: profile.profilePictureUrl ?? null
 	});
+	const league = await getCurrentLeague();
+	await ensureLeagueMembership(user, league);
 
 	setUserSession(event, user.id);
 	redirect(302, '/leaderboard');

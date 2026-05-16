@@ -58,6 +58,29 @@ export const leagueMembers = pgTable(
 	(table) => ({ memberUserUnique: unique().on(table.leagueId, table.userId) })
 );
 
+export const leagueInvitations = pgTable(
+	'league_invitations',
+	{
+		id: uuid('id').primaryKey().defaultRandom(),
+		leagueId: uuid('league_id')
+			.notNull()
+			.references(() => leagues.id),
+		email: text('email').notNull(),
+		displayName: text('display_name').notNull(),
+		isAdmin: boolean('is_admin').notNull().default(false),
+		workosInvitationId: text('workos_invitation_id').notNull().unique(),
+		acceptInvitationUrl: text('accept_invitation_url').notNull(),
+		state: text('state').notNull().default('pending'),
+		invitedByUserId: uuid('invited_by_user_id')
+			.notNull()
+			.references(() => users.id),
+		acceptedByUserId: uuid('accepted_by_user_id').references(() => users.id),
+		createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+		updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow()
+	},
+	(table) => ({ invitationEmailUnique: unique().on(table.leagueId, table.email) })
+);
+
 export const matches = pgTable(
 	'matches',
 	{

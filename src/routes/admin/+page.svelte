@@ -12,7 +12,7 @@
 	{#if form?.message}<p class="rounded-2xl bg-red-50 p-3 text-red-700">{form.message}</p>{/if}
 	<form
 		method="POST"
-		action="?/addMember"
+		action="?/inviteMember"
 		class="grid gap-3 rounded-3xl bg-white p-6 shadow-sm sm:grid-cols-4"
 	>
 		<input
@@ -24,16 +24,23 @@
 			class="flex items-center gap-2 font-bold"
 			><input type="checkbox" name="isAdmin" /> Admin</label
 		><button class="rounded-full bg-emerald-950 px-4 py-3 font-black text-white"
-			>Adicionar membro</button
+			>Enviar convite</button
 		>
 	</form>
-	<div class="grid gap-4 md:grid-cols-2">
+	<div class="grid gap-4 md:grid-cols-3">
 		<div class="rounded-3xl bg-white p-6 shadow-sm">
 			<h2 class="font-black">Membros</h2>
 			{#each data.members as member}<p>
 					{member.displayName}
 					{member.isAdmin ? '· admin' : ''}
 				</p>{/each}
+		</div>
+		<div class="rounded-3xl bg-white p-6 shadow-sm">
+			<h2 class="font-black">Convites</h2>
+			{#each data.invitations as invitation}<p class="my-2 rounded-2xl border p-3">
+					{invitation.displayName}<br />
+					<span class="text-sm text-slate-500">{invitation.email} · {invitation.state}</span>
+				</p>{:else}<p class="text-slate-500">Nenhum convite enviado.</p>{/each}
 		</div>
 		<div class="rounded-3xl bg-white p-6 shadow-sm">
 			<h2 class="font-black">Pendentes e contestadas</h2>

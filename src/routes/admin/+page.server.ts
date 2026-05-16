@@ -1,10 +1,11 @@
 import { requireUser } from '$lib/server/auth/require-user';
 import { db } from '$lib/server/db';
-import { leagueMembers, matches, users } from '$lib/server/db/schema';
+import { leagueInvitations, leagueMembers, matches } from '$lib/server/db/schema';
 import { getCurrentLeague } from '$lib/server/domain/leagues/get-current-league';
+import { sendLeagueInvitation } from '$lib/server/domain/leagues/invitations';
 import { requireLeagueAdmin } from '$lib/server/permissions/league-member';
 import { fail, redirect } from '@sveltejs/kit';
-import { and, eq, inArray } from 'drizzle-orm';
+import { and, desc, eq, inArray } from 'drizzle-orm';
 
 export const load = async (event) => {
 	const user = await requireUser(event);
@@ -14,7 +15,10 @@ export const load = async (event) => {
 		members: await db.query.leagueMembers.findMany({
 			where: eq(leagueMembers.leagueId, league.id)
 		}),
-		users: await db.query.users.findMany(),
+		invitations: await db.query.leagueInvitations.findMany({
+			where: eq(leagueInvitations.leagueId, league.id),
+			orderBy: [desc(leagueInvitations.createdAt)]
+		}),
 		matches: await db.query.matches.findMany({
 			where: inArray(matches.status, ['pending', 'disputed'])
 		})
@@ -22,24 +26,20 @@ export const load = async (event) => {
 };
 
 export const actions = {
-	addMember: async (event) => {
+	inviteMember: async (event) => {
 		const user = await requireUser(event);
 		const league = await getCurrentLeague();
 		await requireLeagueAdmin(user.id, league.id);
 		const form = await event.request.formData();
-		const email = String(form.get('email'));
-		const target = await db.query.users.findFirst({ where: eq(users.email, email) });
-		if (!target)
-			return fail(400, { message: 'Usuário precisa entrar uma vez antes de virar membro.' });
-		await db
-			.insert(leagueMembers)
-			.values({
-				leagueId: league.id,
-				userId: target.id,
-				displayName: String(form.get('displayName') || target.name || target.email),
-				isAdmin: form.get('isAdmin') === 'on'
-			})
-			.onConflictDoNothing();
+		const email = String(form.get('email') || '').trim();
+		if (!email) return fail(400, { message: 'Informe o e-mail do convidado.' });
+		await sendLeagueInvitation({
+			league,
+			inviter: user,
+			email,
+			displayName: String(form.get('displayName') || email),
+			isAdmin: form.get('isAdmin') === 'on'
+		});
 		redirect(303, '/admin');
 	},
 	cancelMatch: async (event) => {
