@@ -12,6 +12,8 @@ export const load: LayoutServerLoad = async (event) => {
 	return {
 		appName: env.PUBLIC_APP_NAME || 'Guris League',
 		user: user ? { id: user.id, name: user.name, email: user.email } : null,
-		member: member ? { id: member.id, displayName: member.displayName, isAdmin: member.isAdmin } : null
+		member: member
+			? { id: member.id, displayName: member.displayName, isAdmin: member.isAdmin }
+			: null
 	};
 };

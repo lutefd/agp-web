@@ -8,7 +8,10 @@ export const GET = async (event) => {
 	if (!code) error(400, 'Código de autenticação ausente.');
 
 	if (!env.WORKOS_CLIENT_ID) throw new Error('WORKOS_CLIENT_ID is required');
-	const result = await getWorkos().userManagement.authenticateWithCode({ clientId: env.WORKOS_CLIENT_ID, code });
+	const result = await getWorkos().userManagement.authenticateWithCode({
+		clientId: env.WORKOS_CLIENT_ID,
+		code
+	});
 	const profile = result.user;
 	const user = await upsertLocalUser({
 		workosUserId: profile.id,

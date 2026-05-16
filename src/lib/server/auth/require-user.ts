@@ -6,7 +6,13 @@ import { eq } from 'drizzle-orm';
 const cookieName = 'guris_user_id';
 
 export function setUserSession(event: RequestEvent, userId: string) {
-	event.cookies.set(cookieName, userId, { path: '/', httpOnly: true, sameSite: 'lax', secure: true, maxAge: 60 * 60 * 24 * 30 });
+	event.cookies.set(cookieName, userId, {
+		path: '/',
+		httpOnly: true,
+		sameSite: 'lax',
+		secure: true,
+		maxAge: 60 * 60 * 24 * 30
+	});
 }
 
 export function clearUserSession(event: RequestEvent) {
@@ -25,10 +31,24 @@ export async function requireUser(event: RequestEvent) {
 	return user;
 }
 
-export async function upsertLocalUser(input: { workosUserId: string; email: string; name?: string | null; avatarUrl?: string | null }) {
-	const [user] = await db.insert(users).values(input).onConflictDoUpdate({
-		target: users.workosUserId,
-		set: { email: input.email, name: input.name, avatarUrl: input.avatarUrl, updatedAt: new Date() }
-	}).returning();
+export async function upsertLocalUser(input: {
+	workosUserId: string;
+	email: string;
+	name?: string | null;
+	avatarUrl?: string | null;
+}) {
+	const [user] = await db
+		.insert(users)
+		.values(input)
+		.onConflictDoUpdate({
+			target: users.workosUserId,
+			set: {
+				email: input.email,
+				name: input.name,
+				avatarUrl: input.avatarUrl,
+				updatedAt: new Date()
+			}
+		})
+		.returning();
 	return user;
 }

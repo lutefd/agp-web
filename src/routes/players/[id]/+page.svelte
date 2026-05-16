@@ -1,2 +1,25 @@
-<script lang="ts">let { data } = $props(); const biggestGain = $derived(Math.max(0, ...data.events.map((e) => e.ratingDelta))); const biggestLoss = $derived(Math.min(0, ...data.events.map((e) => e.ratingDelta)));</script>
-<section class="space-y-6"><div class="rounded-3xl bg-white p-6 shadow-sm"><p class="font-bold uppercase text-emerald-700">Jogador</p><h1 class="text-4xl font-black text-emerald-950">{data.member.displayName}</h1><div class="mt-4 grid gap-3 sm:grid-cols-5"><b>Rating atual<br>{data.member.currentRating}</b><b>Vitórias<br>{data.member.wins}</b><b>Derrotas<br>{data.member.losses}</b><b>Partidas jogadas<br>{data.member.matchesPlayed}</b><b>Maior ganho/perda<br>+{biggestGain} / {biggestLoss}</b></div></div><div class="rounded-3xl bg-white p-6 shadow-sm"><h2 class="font-black">Histórico recente</h2>{#each data.events as event}<p>{event.ratingDelta > 0 ? '+' : ''}{event.ratingDelta}: {event.ratingBefore} → {event.ratingAfter}</p>{:else}<p class="text-slate-500">Sem histórico de rating ainda.</p>{/each}</div></section>
+<script lang="ts">
+	let { data } = $props();
+	const biggestGain = $derived(Math.max(0, ...data.events.map((e) => e.ratingDelta)));
+	const biggestLoss = $derived(Math.min(0, ...data.events.map((e) => e.ratingDelta)));
+</script>
+
+<section class="space-y-6">
+	<div class="rounded-3xl bg-white p-6 shadow-sm">
+		<p class="font-bold uppercase text-emerald-700">Jogador</p>
+		<h1 class="text-4xl font-black text-emerald-950">{data.member.displayName}</h1>
+		<div class="mt-4 grid gap-3 sm:grid-cols-5">
+			<b>Rating atual<br />{data.member.currentRating}</b><b>Vitórias<br />{data.member.wins}</b><b
+				>Derrotas<br />{data.member.losses}</b
+			><b>Partidas jogadas<br />{data.member.matchesPlayed}</b><b
+				>Maior ganho/perda<br />+{biggestGain} / {biggestLoss}</b
+			>
+		</div>
+	</div>
+	<div class="rounded-3xl bg-white p-6 shadow-sm">
+		<h2 class="font-black">Histórico recente</h2>
+		{#each data.events as event}<p>
+				{event.ratingDelta > 0 ? '+' : ''}{event.ratingDelta}: {event.ratingBefore} → {event.ratingAfter}
+			</p>{:else}<p class="text-slate-500">Sem histórico de rating ainda.</p>{/each}
+	</div>
+</section>

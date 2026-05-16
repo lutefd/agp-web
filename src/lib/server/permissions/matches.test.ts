@@ -20,6 +20,8 @@ describe('match permissions', () => {
 		expect(canConfirmMatch(opponentUser, match, playerOne, playerTwo)).toBe(true);
 		expect(canConfirmMatch(user, match, playerOne, playerTwo)).toBe(false);
 		expect(canConfirmMatch(outsider, match, playerOne, playerTwo)).toBe(false);
-		expect(canConfirmMatch(opponentUser, { ...match, status: 'disputed' }, playerOne, playerTwo)).toBe(false);
+		expect(
+			canConfirmMatch(opponentUser, { ...match, status: 'disputed' }, playerOne, playerTwo)
+		).toBe(false);
 	});
 });

@@ -8,7 +8,12 @@ export function getKFactor(matchesPlayed: number) {
 	return 24;
 }
 
-export function calculateEloDelta(playerRating: number, opponentRating: number, matchesPlayed: number, actualScore: 0 | 1) {
+export function calculateEloDelta(
+	playerRating: number,
+	opponentRating: number,
+	matchesPlayed: number,
+	actualScore: 0 | 1
+) {
 	const expectedScore = getExpectedScore(playerRating, opponentRating);
 	const kFactor = getKFactor(matchesPlayed);
 	const ratingDelta = Math.round(kFactor * (actualScore - expectedScore));

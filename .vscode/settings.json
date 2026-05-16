@@ -1,0 +1,13 @@
+{
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": "never"
+	},
+	"prettier.requireConfig": true,
+	"prettier.useEditorConfig": false,
+	"[svelte]": {
+		"editor.defaultFormatter": "svelte.svelte-vscode"
+	},
+	"svelte.plugin.svelte.format.config.prettierConfigPath": ".prettierrc"
+}

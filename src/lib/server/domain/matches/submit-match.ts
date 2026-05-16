@@ -13,22 +13,31 @@ export async function submitMatch(input: {
 	playedAt: Date;
 	notes?: string | null;
 }) {
-	const currentMember = await db.query.leagueMembers.findFirst({ where: eq(leagueMembers.userId, input.user.id) });
-	const opponent = await db.query.leagueMembers.findFirst({ where: eq(leagueMembers.id, input.opponentMemberId) });
-	if (!currentMember || !opponent || !canSubmitMatch(input.user, currentMember, opponent)) error(400, 'Partida inválida para esta liga.');
-	if (![currentMember.id, opponent.id].includes(input.winnerMemberId)) error(400, 'O vencedor precisa ser um dos jogadores.');
+	const currentMember = await db.query.leagueMembers.findFirst({
+		where: eq(leagueMembers.userId, input.user.id)
+	});
+	const opponent = await db.query.leagueMembers.findFirst({
+		where: eq(leagueMembers.id, input.opponentMemberId)
+	});
+	if (!currentMember || !opponent || !canSubmitMatch(input.user, currentMember, opponent))
+		error(400, 'Partida inválida para esta liga.');
+	if (![currentMember.id, opponent.id].includes(input.winnerMemberId))
+		error(400, 'O vencedor precisa ser um dos jogadores.');
 
-	const [match] = await db.insert(matches).values({
-		leagueId: input.leagueId,
-		playerOneMemberId: currentMember.id,
-		playerTwoMemberId: opponent.id,
-		winnerMemberId: input.winnerMemberId,
-		scoreText: input.scoreText,
-		playedAt: input.playedAt,
-		status: 'pending',
-		submittedByUserId: input.user.id,
-		notes: input.notes
-	}).returning();
+	const [match] = await db
+		.insert(matches)
+		.values({
+			leagueId: input.leagueId,
+			playerOneMemberId: currentMember.id,
+			playerTwoMemberId: opponent.id,
+			winnerMemberId: input.winnerMemberId,
+			scoreText: input.scoreText,
+			playedAt: input.playedAt,
+			status: 'pending',
+			submittedByUserId: input.user.id,
+			notes: input.notes
+		})
+		.returning();
 
 	return match;
 }

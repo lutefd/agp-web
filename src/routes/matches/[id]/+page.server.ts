@@ -10,10 +10,26 @@ export const load = async (event) => {
 	await requireUser(event);
 	const match = await db.query.matches.findFirst({ where: eq(matches.id, event.params.id) });
 	if (!match) error(404, 'Partida não encontrada.');
-	return { match, members: await db.query.leagueMembers.findMany({ where: eq(leagueMembers.leagueId, match.leagueId) }), ratingEvents: await db.query.ratingEvents.findMany({ where: eq(ratingEvents.matchId, match.id) }) };
+	return {
+		match,
+		members: await db.query.leagueMembers.findMany({
+			where: eq(leagueMembers.leagueId, match.leagueId)
+		}),
+		ratingEvents: await db.query.ratingEvents.findMany({
+			where: eq(ratingEvents.matchId, match.id)
+		})
+	};
 };
 
 export const actions = {
-	confirm: async (event) => { const user = await requireUser(event); await confirmMatch(event.params.id, user); redirect(303, `/matches/${event.params.id}`); },
-	dispute: async (event) => { const user = await requireUser(event); await disputeMatch(event.params.id, user); redirect(303, `/matches/${event.params.id}`); }
+	confirm: async (event) => {
+		const user = await requireUser(event);
+		await confirmMatch(event.params.id, user);
+		redirect(303, `/matches/${event.params.id}`);
+	},
+	dispute: async (event) => {
+		const user = await requireUser(event);
+		await disputeMatch(event.params.id, user);
+		redirect(303, `/matches/${event.params.id}`);
+	}
 };

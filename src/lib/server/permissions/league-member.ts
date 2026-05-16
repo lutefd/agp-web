@@ -4,7 +4,9 @@ import { error } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 
 export async function getLeagueMember(userId: string, leagueId: string) {
-	return db.query.leagueMembers.findFirst({ where: and(eq(leagueMembers.userId, userId), eq(leagueMembers.leagueId, leagueId)) });
+	return db.query.leagueMembers.findFirst({
+		where: and(eq(leagueMembers.userId, userId), eq(leagueMembers.leagueId, leagueId))
+	});
 }
 
 export async function requireLeagueMember(userId: string, leagueId: string) {
