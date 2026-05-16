@@ -92,15 +92,15 @@ export const matches = pgTable(
 	(table) => ({
 		differentPlayers: check(
 			'matches_different_players',
-			sql`${table.playerOneMemberId} <> ${table.playerTwoMemberId}`
+			sql`player_one_member_id <> player_two_member_id`
 		),
 		validWinner: check(
 			'matches_valid_winner',
-			sql`${table.winnerMemberId} in (${table.playerOneMemberId}, ${table.playerTwoMemberId})`
+			sql`winner_member_id in (player_one_member_id, player_two_member_id)`
 		),
 		validStatus: check(
 			'matches_valid_status',
-			sql`${table.status} in ('pending', 'confirmed', 'disputed', 'cancelled')`
+			sql`status in ('pending', 'confirmed', 'disputed', 'cancelled')`
 		)
 	})
 );

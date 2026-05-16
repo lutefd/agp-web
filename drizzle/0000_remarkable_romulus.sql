@@ -45,9 +45,9 @@ CREATE TABLE "matches" (
 	"notes" text,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
-	CONSTRAINT "matches_different_players" CHECK ("matches"."player_one_member_id" <> "matches"."player_two_member_id"),
-	CONSTRAINT "matches_valid_winner" CHECK ("matches"."winner_member_id" in ("matches"."player_one_member_id", "matches"."player_two_member_id")),
-	CONSTRAINT "matches_valid_status" CHECK ("matches"."status" in ('pending', 'confirmed', 'disputed', 'cancelled'))
+	CONSTRAINT "matches_different_players" CHECK (player_one_member_id <> player_two_member_id),
+	CONSTRAINT "matches_valid_winner" CHECK (winner_member_id in (player_one_member_id, player_two_member_id)),
+	CONSTRAINT "matches_valid_status" CHECK (status in ('pending', 'confirmed', 'disputed', 'cancelled'))
 );
 --> statement-breakpoint
 CREATE TABLE "rating_events" (
