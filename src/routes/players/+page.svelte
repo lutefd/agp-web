@@ -3,6 +3,11 @@
 	let { data } = $props();
 </script>
 
+<svelte:head>
+	<title>Jogadores | AGP</title>
+	<meta name="description" content="Jogadores da Associação dos Guris Profissionais." />
+</svelte:head>
+
 <section class="space-y-8">
 	<div>
 		<p class="font-bold uppercase text-agp-green">Jogadores</p>

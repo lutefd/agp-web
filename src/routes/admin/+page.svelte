@@ -4,6 +4,11 @@
 	const name = (id: string) => data.members.find((m) => m.id === id)?.displayName ?? 'Jogador';
 </script>
 
+<svelte:head>
+	<title>Admin | AGP</title>
+	<meta name="description" content="Administração da liga AGP." />
+</svelte:head>
+
 <section class="space-y-6">
 	<div>
 		<p class="font-bold uppercase text-emerald-700">Admin</p>

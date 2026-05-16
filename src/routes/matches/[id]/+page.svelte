@@ -4,6 +4,14 @@
 	const name = (id: string) => data.members.find((m) => m.id === id)?.displayName ?? 'Jogador';
 </script>
 
+<svelte:head>
+	<title>{name(data.match.playerOneMemberId)} x {name(data.match.playerTwoMemberId)} | AGP</title>
+	<meta
+		name="description"
+		content={`Detalhes da partida entre ${name(data.match.playerOneMemberId)} e ${name(data.match.playerTwoMemberId)}.`}
+	/>
+</svelte:head>
+
 <section class="mx-auto max-w-3xl space-y-6 rounded-3xl bg-white p-6 shadow-sm">
 	<p class="font-bold uppercase text-emerald-700">{formatStatus(data.match.status)}</p>
 	<h1 class="text-4xl font-black text-emerald-950">

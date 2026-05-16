@@ -7,6 +7,11 @@
 	const biggestLoss = $derived(Math.min(0, ...data.events.map((e) => e.ratingDelta)));
 </script>
 
+<svelte:head>
+	<title>{data.member.displayName} | AGP</title>
+	<meta name="description" content={`Perfil de ${data.member.displayName} na AGP.`} />
+</svelte:head>
+
 <section class="space-y-8 pb-16">
 	<Card class="overflow-hidden">
 		<div

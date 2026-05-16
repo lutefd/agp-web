@@ -2,6 +2,11 @@
 	let { data, form } = $props();
 </script>
 
+<svelte:head>
+	<title>Registrar partida | AGP</title>
+	<meta name="description" content="Registrar resultado de uma partida da AGP." />
+</svelte:head>
+
 <section class="mx-auto max-w-2xl space-y-6">
 	<div>
 		<p class="text-sm font-bold uppercase text-emerald-700">Nova partida</p>

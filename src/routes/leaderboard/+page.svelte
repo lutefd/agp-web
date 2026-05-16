@@ -16,6 +16,11 @@
 	);
 </script>
 
+<svelte:head>
+	<title>Rankings | AGP</title>
+	<meta name="description" content="Ranking oficial da Associação dos Guris Profissionais." />
+</svelte:head>
+
 <section class="space-y-10 pb-10 lg:space-y-16 lg:pb-16">
 	<div class="pt-8 text-center lg:pt-24">
 		<div

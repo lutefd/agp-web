@@ -3,6 +3,11 @@
 	import { CheckCircle2, Scale, ShieldAlert, TrendingUp } from '@lucide/svelte';
 </script>
 
+<svelte:head>
+	<title>Regras | AGP</title>
+	<meta name="description" content="Regras do ranking Elo da AGP." />
+</svelte:head>
+
 <section class="mx-auto max-w-5xl space-y-10 pb-16">
 	<div class="text-center">
 		<p class="font-bold uppercase text-agp-green">Regras</p>

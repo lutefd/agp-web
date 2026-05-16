@@ -9,6 +9,11 @@
 	const initial = (id: string) => name(id).slice(0, 1);
 </script>
 
+<svelte:head>
+	<title>Partidas | AGP</title>
+	<meta name="description" content="Partidas recentes e resultados pendentes da AGP." />
+</svelte:head>
+
 <section class="grid gap-10 xl:grid-cols-[1fr_1fr] xl:gap-12">
 	<div class="space-y-8">
 		<div class="flex flex-wrap items-end justify-between gap-4">
