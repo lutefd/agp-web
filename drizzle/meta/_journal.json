@@ -8,6 +8,13 @@
       "when": 1778935871228,
       "tag": "0000_remarkable_romulus",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1778937053791,
+      "tag": "0001_handy_night_thrasher",
+      "breakpoints": true
     }
   ]
 }
