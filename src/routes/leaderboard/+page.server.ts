@@ -3,7 +3,7 @@ import { db } from '$lib/server/db';
 import { leagueMembers, matches } from '$lib/server/db/schema';
 import { getCurrentLeague } from '$lib/server/domain/leagues/get-current-league';
 import { requireLeagueMember } from '$lib/server/permissions/league-member';
-import { and, desc, eq, or } from 'drizzle-orm';
+import { and, desc, eq } from 'drizzle-orm';
 
 export const load = async (event) => {
 	const user = await requireUser(event);
@@ -19,6 +19,7 @@ export const load = async (event) => {
 	});
 	return {
 		members,
+		confirmedCount: confirmed.length,
 		formByMember: Object.fromEntries(
 			members.map((member) => [
 				member.id,
