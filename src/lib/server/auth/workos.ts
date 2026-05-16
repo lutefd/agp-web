@@ -3,7 +3,8 @@ import { WorkOS } from '@workos-inc/node';
 
 export function getWorkos() {
 	if (!env.WORKOS_API_KEY) throw new Error('WORKOS_API_KEY is required');
-	return new WorkOS(env.WORKOS_API_KEY);
+	if (!env.WORKOS_CLIENT_ID) throw new Error('WORKOS_CLIENT_ID is required');
+	return new WorkOS({ apiKey: env.WORKOS_API_KEY, clientId: env.WORKOS_CLIENT_ID });
 }
 
 function requireEnv(name: 'WORKOS_CLIENT_ID' | 'WORKOS_REDIRECT_URI') {
