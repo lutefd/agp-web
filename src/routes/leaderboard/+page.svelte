@@ -16,8 +16,8 @@
 	);
 </script>
 
-<section class="space-y-16 pb-16">
-	<div class="pt-16 text-center lg:pt-24">
+<section class="space-y-10 pb-10 lg:space-y-16 lg:pb-16">
+	<div class="pt-8 text-center lg:pt-24">
 		<div
 			class="mx-auto mb-8 inline-flex items-center gap-3 rounded-2xl bg-agp-green-soft px-5 py-3 font-bold text-agp-green"
 		>
@@ -25,27 +25,29 @@
 			Temporada 2026
 		</div>
 		<h1
-			class="mx-auto max-w-5xl font-serif text-6xl font-black leading-none text-agp-ink md:text-8xl"
+			class="mx-auto max-w-5xl font-serif text-4xl font-black leading-none text-agp-ink sm:text-6xl md:text-8xl"
 		>
 			Race to the Churras Finals
 		</h1>
-		<p class="mx-auto mt-8 max-w-3xl text-2xl text-agp-muted">
+		<p class="mx-auto mt-5 max-w-3xl text-lg text-agp-muted sm:text-2xl lg:mt-8">
 			A temporada oficialíssima dos guris até o fim do ano.
 		</p>
 	</div>
 
-	<div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-		<Card class="relative overflow-hidden p-7">
+	<div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+		<Card class="relative overflow-hidden p-5 lg:p-7">
 			<div
 				class="mb-7 flex h-14 w-14 items-center justify-center rounded-2xl bg-yellow-100 text-agp-gold"
 			>
 				<Trophy />
 			</div>
 			<p class="text-lg text-agp-muted">Líder atual</p>
-			<h2 class="mt-3 text-3xl font-black text-agp-ink">{leader?.displayName ?? 'Sem líder'}</h2>
+			<h2 class="mt-3 text-2xl font-black text-agp-ink lg:text-3xl">
+				{leader?.displayName ?? 'Sem líder'}
+			</h2>
 			<p class="mt-2 text-xl font-bold">{leader?.currentRating ?? 1000} pts</p>
 		</Card>
-		<Card class="p-7">
+		<Card class="p-5 lg:p-7">
 			<div
 				class="mb-7 flex h-14 w-14 items-center justify-center rounded-2xl bg-green-100 text-agp-green"
 			>
@@ -55,34 +57,34 @@
 			<h2 class="mt-3 text-3xl font-black text-agp-ink">{data.confirmedCount}</h2>
 			<p class="mt-2 text-xl font-bold text-agp-green">esta temporada</p>
 		</Card>
-		<Card class="p-7">
+		<Card class="p-5 lg:p-7">
 			<div
 				class="mb-7 flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-100 text-orange-600"
 			>
 				<Zap />
 			</div>
 			<p class="text-lg text-agp-muted">Maior zebra</p>
-			<h2 class="mt-3 text-3xl font-black text-agp-ink">{biggestUpset}</h2>
+			<h2 class="mt-3 text-2xl font-black text-agp-ink lg:text-3xl">{biggestUpset}</h2>
 			<p class="mt-2 text-xl font-bold text-orange-600">ranking em movimento</p>
 		</Card>
-		<Card class="p-7">
+		<Card class="p-5 lg:p-7">
 			<div
 				class="mb-7 flex h-14 w-14 items-center justify-center rounded-2xl bg-stone-100 text-agp-muted"
 			>
 				<Swords />
 			</div>
 			<p class="text-lg text-agp-muted">Próxima rivalidade</p>
-			<h2 class="mt-3 text-3xl font-black text-agp-ink">{rivalry}</h2>
+			<h2 class="mt-3 text-2xl font-black text-agp-ink lg:text-3xl">{rivalry}</h2>
 			<p class="mt-2 text-xl font-bold text-agp-muted">H2H pegando fogo</p>
 		</Card>
 	</div>
 
 	<div class="flex flex-wrap items-end justify-between gap-4">
 		<div>
-			<h2 class="font-serif text-5xl font-black text-agp-ink">Ranking Oficialíssimo</h2>
+			<h2 class="font-serif text-4xl font-black text-agp-ink lg:text-5xl">Ranking Oficialíssimo</h2>
 			<p class="mt-2 text-xl text-agp-muted">Atualizado após cada partida confirmada</p>
 		</div>
-		<div class="flex items-center gap-3 text-lg text-agp-muted">
+		<div class="flex flex-wrap items-center gap-3 text-base text-agp-muted lg:text-lg">
 			<span class="h-3 w-3 rounded-full bg-agp-green"></span>
 			Sistema Elo <span class="text-agp-border">|</span> Base: 1000 pts
 		</div>
@@ -98,10 +100,10 @@
 		<div class="divide-y divide-agp-border">
 			{#each data.members as member, index}
 				<a
-					class="grid gap-4 px-8 py-8 transition hover:bg-agp-green-soft/40 lg:grid-cols-[5rem_1fr_8rem_8rem_14rem_8rem] lg:items-center"
+					class="grid gap-4 px-5 py-6 transition hover:bg-agp-green-soft/40 lg:grid-cols-[5rem_1fr_8rem_8rem_14rem_8rem] lg:items-center lg:px-8 lg:py-8"
 					href={`/players/${member.id}`}
 				>
-					<div class="flex items-center gap-4">
+					<div class="hidden items-center gap-4 lg:flex">
 						<span
 							class="flex h-12 w-12 items-center justify-center rounded-full {index === 0
 								? 'bg-agp-gold text-agp-ink'
@@ -115,12 +117,19 @@
 						>
 						<strong class="text-2xl text-agp-ink">{member.displayName}</strong>
 					</div>
-					<strong class="font-serif text-3xl text-agp-ink">{member.currentRating}</strong>
-					<span class="text-2xl"
-						><b class="text-agp-green">{member.wins}</b> /
-						<b class="text-red-600">{member.losses}</b></span
-					>
-					<div class="flex gap-2">
+					<div class="grid grid-cols-2 gap-4 lg:contents">
+						<strong class="font-serif text-3xl text-agp-ink"
+							><span
+								class="block text-xs font-sans uppercase tracking-widest text-agp-muted lg:hidden"
+								>Rating</span
+							>{member.currentRating}</strong
+						>
+						<span class="text-2xl"
+							><b class="text-agp-green">{member.wins}</b> /
+							<b class="text-red-600">{member.losses}</b></span
+						>
+					</div>
+					<div class="flex flex-wrap gap-2">
 						{#each data.formByMember[member.id] ?? [] as result}
 							<span
 								class="rounded-lg px-3 py-2 font-black {result === 'V'

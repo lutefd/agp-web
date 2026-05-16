@@ -9,11 +9,11 @@
 	const initial = (id: string) => name(id).slice(0, 1);
 </script>
 
-<section class="grid gap-12 xl:grid-cols-[1fr_1fr]">
+<section class="grid gap-10 xl:grid-cols-[1fr_1fr] xl:gap-12">
 	<div class="space-y-8">
-		<div class="flex items-end justify-between gap-4">
+		<div class="flex flex-wrap items-end justify-between gap-4">
 			<div>
-				<h1 class="font-serif text-5xl font-black text-agp-ink">Partidas Recentes</h1>
+				<h1 class="font-serif text-4xl font-black text-agp-ink sm:text-5xl">Partidas Recentes</h1>
 				<p class="mt-2 text-xl text-agp-muted">Resultados validados pelos jogadores</p>
 			</div>
 			<a class="font-bold text-agp-green" href="/matches">Ver todas →</a>
@@ -21,9 +21,9 @@
 
 		<div class="space-y-5">
 			{#each data.matches.filter((m) => m.status === 'confirmed').slice(0, 4) as match}
-				<Card class="p-6">
+				<Card class="p-5 lg:p-6">
 					<a
-						class="grid gap-6 md:grid-cols-[1fr_auto_1fr] md:items-center"
+						class="grid gap-5 md:grid-cols-[1fr_auto_1fr] md:items-center lg:gap-6"
 						href={`/matches/${match.id}`}
 					>
 						<div>
@@ -42,12 +42,13 @@
 								</div>
 							</div>
 						</div>
-						<strong class="rounded-2xl bg-stone-100 px-6 py-4 font-serif text-2xl"
+						<strong
+							class="w-fit rounded-2xl bg-stone-100 px-5 py-3 font-serif text-2xl md:w-auto md:px-6 md:py-4"
 							>{match.scoreText}</strong
 						>
-						<div class="text-right">
+						<div class="text-left md:text-right">
 							<p class="text-agp-muted">{formatDate(match.playedAt)}</p>
-							<div class="mt-6 flex items-center justify-end gap-4">
+							<div class="mt-6 flex items-center gap-4 md:justify-end">
 								<div>
 									<strong class="text-2xl text-agp-muted"
 										>{name(
@@ -78,7 +79,7 @@
 
 	<div class="space-y-8">
 		<div>
-			<h2 class="flex items-center gap-3 text-3xl font-black text-agp-ink">
+			<h2 class="flex items-center gap-3 text-2xl font-black text-agp-ink sm:text-3xl">
 				<AlertCircle class="text-orange-600" /> Aguardando Confirmação
 			</h2>
 		</div>
@@ -89,9 +90,9 @@
 				>
 					Aguardando o adversário não fugir...
 				</div>
-				<div class="p-6">
+				<div class="p-5 lg:p-6">
 					<a
-						class="grid gap-6 md:grid-cols-[1fr_auto_1fr] md:items-center"
+						class="grid gap-5 md:grid-cols-[1fr_auto_1fr] md:items-center lg:gap-6"
 						href={`/matches/${match.id}`}
 					>
 						<div class="flex items-center gap-4">
@@ -104,12 +105,12 @@
 								<p class="text-agp-muted">reportou vitória</p>
 							</div>
 						</div>
-						<div class="text-center">
+						<div class="text-left md:text-center">
 							<strong class="font-serif text-3xl">{match.scoreText}</strong>
 							<p class="text-agp-muted">Super tiebreak</p>
 						</div>
-						<div class="flex items-center justify-end gap-4">
-							<div class="text-right">
+						<div class="flex items-center gap-4 md:justify-end">
+							<div class="text-left md:text-right">
 								<strong class="text-2xl text-agp-muted"
 									>{name(
 										match.winnerMemberId === match.playerOneMemberId
@@ -139,9 +140,9 @@
 			<Star class="text-agp-gold" />
 			<h2 class="text-3xl font-black">Destaque da Semana</h2>
 		</div>
-		<Card class="bg-gradient-to-r from-agp-green-soft to-white p-8">
+		<Card class="bg-gradient-to-r from-agp-green-soft to-white p-6 lg:p-8">
 			<p class="text-xl text-agp-muted">Líder do ranking</p>
-			<h3 class="font-serif text-5xl font-black text-agp-ink">
+			<h3 class="font-serif text-4xl font-black text-agp-ink sm:text-5xl">
 				{data.members[0]?.displayName ?? 'Em aberto'}
 			</h3>
 			<p class="mt-2 text-5xl font-black text-agp-green">

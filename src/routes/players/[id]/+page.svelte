@@ -10,25 +10,29 @@
 <section class="space-y-8 pb-16">
 	<Card class="overflow-hidden">
 		<div
-			class="bg-gradient-to-r from-agp-green-soft to-white p-8 md:flex md:items-center md:justify-between"
+			class="bg-gradient-to-r from-agp-green-soft to-white p-5 md:flex md:items-center md:justify-between lg:p-8"
 		>
-			<div class="flex items-center gap-6">
+			<div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-6">
 				<span
-					class="flex h-28 w-28 items-center justify-center rounded-full bg-agp-green text-5xl font-black text-white"
+					class="flex h-20 w-20 items-center justify-center rounded-full bg-agp-green text-4xl font-black text-white lg:h-28 lg:w-28 lg:text-5xl"
 					>{data.member.displayName.slice(0, 1)}</span
 				>
 				<div>
 					<p class="font-bold uppercase text-agp-green">Jogador</p>
-					<h1 class="font-serif text-6xl font-black text-agp-ink">{data.member.displayName}</h1>
+					<h1 class="font-serif text-4xl font-black text-agp-ink sm:text-5xl lg:text-6xl">
+						{data.member.displayName}
+					</h1>
 					<p class="text-xl text-agp-muted">Perfil oficial da AGP</p>
 				</div>
 			</div>
-			<div class="mt-6 text-right md:mt-0">
-				<p class="font-serif text-7xl font-black text-agp-green">{data.member.currentRating}</p>
+			<div class="mt-6 text-left md:mt-0 md:text-right">
+				<p class="font-serif text-5xl font-black text-agp-green lg:text-7xl">
+					{data.member.currentRating}
+				</p>
 				<p class="text-xl text-agp-muted">pontos</p>
 			</div>
 		</div>
-		<div class="grid gap-4 p-8 md:grid-cols-4">
+		<div class="grid gap-4 p-5 sm:grid-cols-2 md:grid-cols-4 lg:p-8">
 			<div class="rounded-2xl bg-stone-100 p-5">
 				<p class="text-agp-muted">Vitórias</p>
 				<b class="text-4xl text-agp-green">{data.member.wins}</b>

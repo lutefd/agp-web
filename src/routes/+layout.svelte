@@ -16,30 +16,37 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<div class="agp-grid min-h-screen bg-agp-cream">
-	<header class="border-b border-agp-border bg-white/90 backdrop-blur">
-		<nav class="mx-auto flex max-w-[92rem] flex-wrap items-center gap-4 px-5 py-5 lg:px-10">
-			<a class="mr-auto flex items-center gap-3" href="/leaderboard" aria-label="AGP">
+<div class="agp-grid min-h-screen bg-agp-cream pb-24 lg:pb-0">
+	<header class="sticky top-0 z-40 border-b border-agp-border bg-white/95 backdrop-blur">
+		<nav
+			class="mx-auto flex max-w-[92rem] flex-wrap items-center gap-3 px-4 py-3 lg:gap-4 lg:px-10 lg:py-5"
+		>
+			<a class="mr-auto flex min-w-0 items-center gap-3" href="/leaderboard" aria-label="AGP">
 				<span
-					class="relative flex h-14 w-14 items-center justify-center rounded-full bg-agp-green text-2xl font-black text-white"
+					class="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-agp-green text-xl font-black text-white lg:h-14 lg:w-14 lg:text-2xl"
 				>
 					A
 					<span
 						class="absolute -bottom-1 -right-1 h-4 w-4 rounded-full border-4 border-agp-gold bg-agp-ink"
 					></span>
 				</span>
-				<span>
-					<span class="block font-serif text-3xl font-black leading-none text-agp-ink">AGP</span>
-					<span class="text-sm text-agp-muted sm:text-base">Associação dos Guris Profissionais</span
+				<span class="min-w-0">
+					<span class="block font-serif text-2xl font-black leading-none text-agp-ink lg:text-3xl"
+						>AGP</span
+					>
+					<span class="hidden text-sm text-agp-muted sm:block lg:text-base"
+						>Associação dos Guris Profissionais</span
 					>
 				</span>
 			</a>
 
 			{#if data.user}
-				<div class="order-last flex w-full gap-2 overflow-x-auto lg:order-none lg:w-auto">
+				<div
+					class="order-last -mx-4 flex w-[calc(100%+2rem)] gap-2 overflow-x-auto border-t border-agp-border px-4 pt-3 lg:order-none lg:mx-0 lg:w-auto lg:border-0 lg:px-0 lg:pt-0"
+				>
 					{#each navItems as item}
 						<a
-							class="rounded-2xl px-4 py-3 text-base font-bold text-agp-muted transition hover:bg-agp-green-soft hover:text-agp-green"
+							class="shrink-0 rounded-2xl px-3 py-2 text-sm font-bold text-agp-muted transition hover:bg-agp-green-soft hover:text-agp-green lg:px-4 lg:py-3 lg:text-base"
 							href={item.href}>{item.label}</a
 						>
 					{/each}
@@ -48,7 +55,7 @@
 						class="rounded-2xl px-4 py-3 font-bold text-agp-muted hover:bg-agp-green-soft hover:text-agp-green"
 						href="/admin">Admin</a
 					>{/if}
-				<Button href="/matches/new">+ Registrar partida</Button>
+				<Button href="/matches/new" class="hidden lg:inline-flex">+ Registrar partida</Button>
 				<a
 					class="rounded-2xl px-4 py-3 font-bold text-agp-muted hover:bg-red-50 hover:text-red-700"
 					href="/logout">Sair</a
@@ -58,5 +65,11 @@
 			{/if}
 		</nav>
 	</header>
-	<main class="mx-auto max-w-[92rem] px-5 py-8 lg:px-10">{@render children()}</main>
+	<main class="mx-auto max-w-[92rem] px-4 py-6 sm:px-5 lg:px-10 lg:py-8">{@render children()}</main>
+	{#if data.user}
+		<a
+			class="fixed bottom-4 left-4 right-4 z-50 rounded-2xl bg-agp-green px-5 py-4 text-center font-black text-white shadow-xl lg:hidden"
+			href="/matches/new">+ Registrar partida</a
+		>
+	{/if}
 </div>
