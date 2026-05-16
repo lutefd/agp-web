@@ -22,21 +22,27 @@ export const actions = {
 		const user = await requireUser(event);
 		const league = await getCurrentLeague();
 		const form = await event.request.formData();
+		const scoreText = String(form.get('scoreText') || '')
+			.trim()
+			.replace(/\s+/g, ' ');
+		const playedAt = new Date(String(form.get('playedAt')));
+		if (!scoreText) return fail(400, { message: 'Informe o placar da partida.' });
+		if (Number.isNaN(playedAt.getTime())) return fail(400, { message: 'Informe uma data válida.' });
 		try {
-			const match = await submitMatch({
+			await submitMatch({
 				leagueId: league.id,
 				user,
 				opponentMemberId: String(form.get('opponentMemberId')),
 				winnerMemberId: String(form.get('winnerMemberId')),
-				scoreText: String(form.get('scoreText') || '').trim(),
-				playedAt: new Date(String(form.get('playedAt'))),
+				scoreText,
+				playedAt,
 				notes: String(form.get('notes') || '').trim() || null
 			});
-			redirect(302, `/matches/${match.id}`);
 		} catch (err) {
 			return fail(400, {
 				message: err instanceof Error ? err.message : 'Não foi possível enviar o resultado.'
 			});
 		}
+		redirect(303, '/matches');
 	}
 };
