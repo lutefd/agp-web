@@ -13,6 +13,12 @@
 			? data.match.playerTwoMemberId
 			: data.match.playerOneMemberId
 	);
+	const playerOptions = $derived(
+		data.members.filter(
+			(member) =>
+				member.id === data.match.playerOneMemberId || member.id === data.match.playerTwoMemberId
+		)
+	);
 </script>
 
 <svelte:head>
@@ -108,30 +114,92 @@
 				{#if data.canReview}
 					<form
 						method="POST"
-						class="grid gap-3 sm:grid-cols-[1fr_auto]"
+						class="space-y-5"
 						onsubmit={() => {
 							actionInProgress = true;
 						}}
 					>
-						<button
-							formaction="?/confirm"
-							disabled={actionInProgress}
-							class="inline-flex items-center justify-center gap-2 rounded-2xl bg-agp-green px-5 py-4 font-black text-white disabled:opacity-60"
-						>
-							<CheckCircle2 size={20} /> Confirmar resultado
-						</button>
-						<button
-							formaction="?/dispute"
-							disabled={actionInProgress}
-							class="inline-flex items-center justify-center gap-2 rounded-2xl border border-red-200 bg-red-50 px-5 py-4 font-black text-red-700 disabled:opacity-60"
-						>
-							<X size={20} /> Contestar
-						</button>
+						<div class="grid gap-4 rounded-2xl bg-stone-100 p-4 sm:grid-cols-2">
+							<label class="font-bold">
+								Vencedor correto
+								<select
+									name="winnerMemberId"
+									class="mt-1 w-full rounded-xl border border-agp-border p-3"
+								>
+									{#each playerOptions as member}
+										<option value={member.id} selected={member.id === data.match.winnerMemberId}
+											>{member.displayName}</option
+										>
+									{/each}
+								</select>
+							</label>
+							<label class="font-bold">
+								Placar correto
+								<input
+									name="scoreText"
+									value={data.match.scoreText}
+									class="mt-1 w-full rounded-xl border border-agp-border p-3"
+								/>
+							</label>
+							<label class="font-bold sm:col-span-2">
+								Mensagem para quem registrou
+								<textarea
+									name="notes"
+									class="mt-1 w-full rounded-xl border border-agp-border p-3"
+									placeholder="Ex: o placar certo foi 6-4, não 6-1"
+								></textarea>
+							</label>
+						</div>
+						<div class="grid gap-3 sm:grid-cols-[1fr_auto]">
+							<button
+								formaction="?/confirm"
+								disabled={actionInProgress}
+								class="inline-flex items-center justify-center gap-2 rounded-2xl bg-agp-green px-5 py-4 font-black text-white disabled:opacity-60"
+							>
+								<CheckCircle2 size={20} /> Confirmar como está
+							</button>
+							<button
+								formaction="?/dispute"
+								disabled={actionInProgress}
+								class="inline-flex items-center justify-center gap-2 rounded-2xl border border-red-200 bg-red-50 px-5 py-4 font-black text-red-700 disabled:opacity-60"
+							>
+								<X size={20} /> Enviar contestação
+							</button>
+						</div>
 					</form>
 				{:else}
 					<p class="rounded-2xl bg-stone-100 p-5 font-bold text-agp-muted">
 						Você pode acompanhar essa partida, mas só o adversário de quem enviou pode confirmar ou
 						contestar.
+					</p>
+				{/if}
+			</div>
+		</Card>
+	{/if}
+
+	{#if data.match.status === 'disputed'}
+		<Card class="overflow-hidden border-red-200">
+			<div class="border-b border-red-200 bg-red-50 p-6">
+				<h2 class="flex items-center gap-3 text-2xl font-black text-agp-ink">
+					<AlertTriangle class="text-red-600" /> Resultado contestado
+				</h2>
+				<p class="mt-2 text-agp-muted">
+					A partida foi editada com a proposta de correção. Quem registrou originalmente precisa
+					aceitar.
+				</p>
+			</div>
+			<div class="p-6">
+				{#if data.canAcceptDispute}
+					<form method="POST" action="?/acceptDispute">
+						<button
+							class="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-agp-green px-5 py-4 font-black text-white sm:w-auto"
+						>
+							<CheckCircle2 size={20} /> Aceitar correção e confirmar
+						</button>
+					</form>
+				{:else}
+					<p class="rounded-2xl bg-stone-100 p-5 font-bold text-agp-muted">
+						Aguardando quem registrou a partida aceitar a correção.
 					</p>
 				{/if}
 			</div>

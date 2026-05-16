@@ -2,7 +2,7 @@
 	import Button from '$lib/components/ui/button.svelte';
 	import Card from '$lib/components/ui/card.svelte';
 	import { formatDate } from '$lib/format';
-	import { AlertCircle, CheckCircle2, Star } from '@lucide/svelte';
+	import { AlertCircle, CheckCircle2, Flame, Star } from '@lucide/svelte';
 
 	let { data } = $props();
 	const name = (id: string) => data.members.find((m) => m.id === id)?.displayName ?? 'Jogador';
@@ -15,6 +15,7 @@
 				match.playerOneMemberId === data.member.id || match.playerTwoMemberId === data.member.id
 		)
 	);
+	const disputedMatches = $derived(data.matches.filter((match) => match.status === 'disputed'));
 	const statusLabel = (status: string) =>
 		({
 			pending: 'Pendente',
@@ -83,6 +84,44 @@
 				</a>
 			{:else}
 				<p class="p-8 text-agp-muted">Você ainda não tem partidas registradas.</p>
+			{/each}
+		</div>
+	</Card>
+
+	<Card class="overflow-hidden border-red-200">
+		<div class="border-b border-red-200 bg-red-50 px-5 py-4 lg:px-8">
+			<h2 class="flex items-center gap-3 text-2xl font-black text-agp-ink">
+				<Flame class="text-red-600" /> Tretas
+			</h2>
+			<p class="text-agp-muted">Partidas contestadas esperando alguém baixar a guarda.</p>
+		</div>
+		<div class="divide-y divide-red-100">
+			{#each disputedMatches as match}
+				<a
+					class="grid gap-4 px-5 py-5 transition hover:bg-red-50/60 lg:grid-cols-[1fr_auto_10rem] lg:items-center lg:px-8"
+					href={`/matches/${match.id}`}
+				>
+					<div class="flex items-center gap-4">
+						<span
+							class="flex h-12 w-12 items-center justify-center rounded-full bg-red-100 font-black text-red-700"
+							>{initial(match.winnerMemberId)}</span
+						>
+						<div>
+							<strong class="text-xl text-agp-ink">
+								{name(match.playerOneMemberId)} x {name(match.playerTwoMemberId)}
+							</strong>
+							<p class="text-sm text-agp-muted">
+								Proposta atual: {name(match.winnerMemberId)} venceu · {formatDate(match.playedAt)}
+							</p>
+						</div>
+					</div>
+					<strong class="w-fit rounded-2xl bg-white px-4 py-2 font-serif text-xl text-agp-ink">
+						{match.scoreText}
+					</strong>
+					<span class="font-black text-red-700">Resolver treta →</span>
+				</a>
+			{:else}
+				<p class="p-8 text-agp-muted">Nenhuma treta ativa. Por enquanto.</p>
 			{/each}
 		</div>
 	</Card>

@@ -40,7 +40,7 @@
 		</div>
 
 		<Card class="overflow-hidden">
-			<div class="bg-gradient-to-br from-agp-green-soft to-white p-6 sm:p-8">
+			<div class="bg-linear-to-br from-agp-green-soft to-white p-6 sm:p-8">
 				<div class="flex items-center justify-between gap-4">
 					<div>
 						<p class="text-agp-muted">Líder imaginário</p>
