@@ -20,7 +20,7 @@ export async function sendMatchConfirmationEmail(input: {
 	const matchUrl = getMatchUrl(input.match.id);
 	const from = privateEnv.RESEND_FROM || 'AGP <onboarding@resend.dev>';
 
-	await resend.emails.send({
+	const result = await resend.emails.send({
 		from,
 		to: input.opponentUser.email,
 		subject: `${input.submitter.displayName} registrou uma partida na AGP`,
@@ -42,4 +42,10 @@ export async function sendMatchConfirmationEmail(input: {
 			</div>
 		`
 	});
+
+	if (result.error) {
+		throw new Error(`Resend failed to send match confirmation email: ${result.error.message}`);
+	}
+
+	return result.data;
 }
