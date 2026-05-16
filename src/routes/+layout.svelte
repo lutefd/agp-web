@@ -62,6 +62,11 @@
 						class="rounded-2xl px-4 py-3 font-bold text-agp-muted hover:bg-agp-green-soft hover:text-agp-green"
 						href="/admin">Admin</a
 					>{/if}
+				<a
+					class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-agp-green text-2xl font-black text-white shadow-sm transition hover:bg-agp-green/90 lg:hidden"
+					href="/matches/new"
+					aria-label="Registrar partida">+</a
+				>
 				<Button href="/matches/new" class="hidden lg:inline-flex">+ Registrar partida</Button>
 				<a
 					class="rounded-2xl px-4 py-3 font-bold text-agp-muted hover:bg-red-50 hover:text-red-700"
@@ -79,11 +84,5 @@
 		<main class="mx-auto max-w-[92rem] px-4 py-6 sm:px-5 lg:px-10 lg:py-8">
 			{@render children()}
 		</main>
-	{/if}
-	{#if data.user}
-		<a
-			class="fixed bottom-4 left-4 right-4 z-50 rounded-2xl bg-agp-green px-5 py-4 text-center font-black text-white shadow-xl lg:hidden"
-			href="/matches/new">+ Registrar partida</a
-		>
 	{/if}
 </div>

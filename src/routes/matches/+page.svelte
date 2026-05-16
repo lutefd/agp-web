@@ -266,7 +266,6 @@
 					{data.members[0]?.currentRating ?? 1000}
 				</p>
 			</Card>
-			<Button href="/matches/new" class="w-full">Registrar partida</Button>
 		</div>
 	</div>
 </section>
