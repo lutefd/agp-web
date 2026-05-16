@@ -25,7 +25,7 @@
 					<span>
 						<strong class="block text-2xl text-agp-ink">{member.displayName}</strong>
 						<span class="text-agp-muted"
-							>{member.currentRating} pts · {member.wins}/{member.losses}</span
+							>{member.matchesPlayed === 0 ? '-' : `${member.currentRating} pts`} · {member.wins}/{member.losses}</span
 						>
 					</span>
 				</a>

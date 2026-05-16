@@ -11,7 +11,11 @@ export const load = async (event) => {
 	await requireLeagueMember(user.id, league.id);
 	const members = await db.query.leagueMembers.findMany({
 		where: eq(leagueMembers.leagueId, league.id),
-		orderBy: [desc(leagueMembers.currentRating), desc(leagueMembers.wins)]
+		orderBy: [
+			desc(leagueMembers.matchesPlayed),
+			desc(leagueMembers.currentRating),
+			desc(leagueMembers.wins)
+		]
 	});
 	const confirmed = await db.query.matches.findMany({
 		where: and(eq(matches.leagueId, league.id), eq(matches.status, 'confirmed')),

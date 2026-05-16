@@ -3,15 +3,16 @@
 	import { Swords, Target, Trophy, Zap } from '@lucide/svelte';
 
 	let { data } = $props();
-	const leader = $derived(data.members[0]);
+	const rankedMembers = $derived(data.members.filter((member) => member.matchesPlayed > 0));
+	const leader = $derived(rankedMembers[0]);
 	const biggestUpset = $derived(
-		data.members.length > 1
-			? `${data.members.at(-1)?.displayName} → ${leader?.displayName}`
+		rankedMembers.length > 1
+			? `${rankedMembers.at(-1)?.displayName} → ${leader?.displayName}`
 			: 'Em aberto'
 	);
 	const rivalry = $derived(
-		data.members.length > 1
-			? `${data.members[0].displayName} vs ${data.members[1].displayName}`
+		rankedMembers.length > 1
+			? `${rankedMembers[0].displayName} vs ${rankedMembers[1].displayName}`
 			: 'Aguardando jogos'
 	);
 </script>
@@ -50,7 +51,7 @@
 			<h2 class="mt-3 text-2xl font-black text-agp-ink lg:text-3xl">
 				{leader?.displayName ?? 'Sem líder'}
 			</h2>
-			<p class="mt-2 text-xl font-bold">{leader?.currentRating ?? 1000} pts</p>
+			<p class="mt-2 text-xl font-bold">{leader ? `${leader.currentRating} pts` : '-'}</p>
 		</Card>
 		<Card class="p-5 lg:p-7">
 			<div
@@ -112,7 +113,8 @@
 						<span
 							class="flex h-12 w-12 items-center justify-center rounded-full {index === 0
 								? 'bg-agp-gold text-agp-ink'
-								: 'bg-stone-100 text-agp-muted'} font-black">{index === 0 ? '♛' : index + 1}</span
+								: 'bg-stone-100 text-agp-muted'} font-black"
+							>{member.matchesPlayed === 0 ? '-' : index === 0 ? '♛' : index + 1}</span
 						>
 					</div>
 					<div class="flex items-center gap-5">
@@ -127,7 +129,7 @@
 							><span
 								class="block text-xs font-sans uppercase tracking-widest text-agp-muted lg:hidden"
 								>Rating</span
-							>{member.currentRating}</strong
+							>{member.matchesPlayed === 0 ? '-' : member.currentRating}</strong
 						>
 						<span class="text-2xl"
 							><b class="text-agp-green">{member.wins}</b> /
@@ -145,9 +147,13 @@
 							<span class="text-agp-muted">Sem jogos</span>
 						{/each}
 					</div>
-					<span class="font-black text-agp-green"
-						>↗ +{Math.max(0, member.wins - member.losses)}</span
-					>
+					{#if member.matchesPlayed > 0}
+						<span class="font-black text-agp-green"
+							>↗ +{Math.max(0, member.wins - member.losses)}</span
+						>
+					{:else}
+						<span class="font-black text-agp-muted">-</span>
+					{/if}
 				</a>
 			{:else}
 				<p class="p-10 text-center text-agp-muted">Nenhum jogador na liga ainda.</p>

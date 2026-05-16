@@ -13,7 +13,7 @@ export const load = async (event) => {
 	return {
 		members: await db.query.leagueMembers.findMany({
 			where: eq(leagueMembers.leagueId, league.id),
-			orderBy: [desc(leagueMembers.currentRating)]
+			orderBy: [desc(leagueMembers.matchesPlayed), desc(leagueMembers.currentRating)]
 		})
 	};
 };
