@@ -1,24 +1,63 @@
-<section class="mx-auto max-w-3xl space-y-5 rounded-3xl bg-white p-6 shadow-sm">
-	<p class="font-bold uppercase text-emerald-700">Regras</p>
-	<h1 class="text-4xl font-black text-emerald-950">Como o ranking se mexe</h1>
-	<p>
-		Todo mundo começa com 1000 pontos. A ideia é simples: ganhar de alguém melhor vale mais, perder
-		para alguém pior pesa mais.
-	</p>
-	<p>
-		Só partidas confirmadas alteram o rating. Quando alguém envia um resultado, o adversário precisa
-		confirmar antes do ranking mudar.
-	</p>
-	<p>
-		Usamos Elo. Jogadores novos sobem e descem mais rápido: as primeiras 5 partidas usam K 40, da 6ª
-		à 15ª usam K 32, e depois disso K 24.
-	</p>
-	<p>
-		O placar fica registrado, mas não muda o cálculo no MVP. Um 6-0 6-0 e um 7-6 7-6 contam como
-		vitória do mesmo jeito.
-	</p>
-	<p>
-		Se algo estiver errado, conteste a partida. Um admin pode cancelar partidas pendentes ou
-		contestadas.
-	</p>
+<script lang="ts">
+	import Card from '$lib/components/ui/card.svelte';
+	import { CheckCircle2, Scale, ShieldAlert, TrendingUp } from '@lucide/svelte';
+</script>
+
+<section class="mx-auto max-w-5xl space-y-10 pb-16">
+	<div class="text-center">
+		<p class="font-bold uppercase text-agp-green">Regras</p>
+		<h1 class="mt-3 font-serif text-6xl font-black text-agp-ink">Manual anti-treta</h1>
+		<p class="mx-auto mt-5 max-w-3xl text-2xl text-agp-muted">
+			Ranking de amigos só funciona quando todo mundo entende por que subiu ou caiu.
+		</p>
+	</div>
+
+	<div class="grid gap-5 md:grid-cols-2">
+		<Card class="p-7"
+			><Scale class="mb-5 text-agp-green" />
+			<h2 class="text-2xl font-black">Todos começam com 1000</h2>
+			<p class="mt-3 text-lg text-agp-muted">
+				A base é igual para todo mundo. Depois disso, a quadra decide.
+			</p></Card
+		>
+		<Card class="p-7"
+			><CheckCircle2 class="mb-5 text-agp-green" />
+			<h2 class="text-2xl font-black">Só confirmado conta</h2>
+			<p class="mt-3 text-lg text-agp-muted">
+				Resultado enviado não mexe no ranking até o adversário confirmar.
+			</p></Card
+		>
+		<Card class="p-7"
+			><TrendingUp class="mb-5 text-agp-green" />
+			<h2 class="text-2xl font-black">Usamos Elo</h2>
+			<p class="mt-3 text-lg text-agp-muted">
+				Ganhar de alguém acima vale mais. Perder para alguém abaixo custa mais.
+			</p></Card
+		>
+		<Card class="p-7"
+			><ShieldAlert class="mb-5 text-orange-600" />
+			<h2 class="text-2xl font-black">Placar não altera cálculo</h2>
+			<p class="mt-3 text-lg text-agp-muted">
+				6-0 ou 7-6 contam como vitória do mesmo jeito nesta versão.
+			</p></Card
+		>
+	</div>
+
+	<Card class="p-8">
+		<h2 class="font-serif text-4xl font-black">K-factor</h2>
+		<div class="mt-6 grid gap-4 md:grid-cols-3">
+			<div class="rounded-2xl bg-agp-green-soft p-5">
+				<b class="text-3xl text-agp-green">40</b>
+				<p>Primeiras 5 partidas</p>
+			</div>
+			<div class="rounded-2xl bg-stone-100 p-5">
+				<b class="text-3xl text-agp-ink">32</b>
+				<p>Da 6ª à 15ª partida</p>
+			</div>
+			<div class="rounded-2xl bg-stone-100 p-5">
+				<b class="text-3xl text-agp-ink">24</b>
+				<p>Depois de 15 partidas</p>
+			</div>
+		</div>
+	</Card>
 </section>
