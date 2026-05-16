@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { navigating } from '$app/state';
+	import AppLoading from '$lib/components/AppLoading.svelte';
 	import Button from '$lib/components/ui/button.svelte';
 	import '../app.css';
 
@@ -71,7 +73,13 @@
 			{/if}
 		</nav>
 	</header>
-	<main class="mx-auto max-w-[92rem] px-4 py-6 sm:px-5 lg:px-10 lg:py-8">{@render children()}</main>
+	{#if navigating.to}
+		<AppLoading />
+	{:else}
+		<main class="mx-auto max-w-[92rem] px-4 py-6 sm:px-5 lg:px-10 lg:py-8">
+			{@render children()}
+		</main>
+	{/if}
 	{#if data.user}
 		<a
 			class="fixed bottom-4 left-4 right-4 z-50 rounded-2xl bg-agp-green px-5 py-4 text-center font-black text-white shadow-xl lg:hidden"

@@ -49,9 +49,11 @@ export const actions = {
 				? await db.query.users.findFirst({ where: eq(users.id, opponent.userId) })
 				: null;
 			if (submitter && opponent && opponentUser) {
-				await sendMatchConfirmationEmail({ match, submitter, opponent, opponentUser }).catch((err) => {
-					console.error('Failed to send match confirmation email', err);
-				});
+				await sendMatchConfirmationEmail({ match, submitter, opponent, opponentUser }).catch(
+					(err) => {
+						console.error('Failed to send match confirmation email', err);
+					}
+				);
 			}
 		} catch (err) {
 			return fail(400, {
