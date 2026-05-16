@@ -35,12 +35,14 @@
 	},
 	"dependencies": {
 		"@lucide/svelte": "^1.16.0",
+		"@react-email/render": "^2.0.8",
 		"@tailwindcss/vite": "^4.3.0",
 		"@workos-inc/node": "^9.3.0",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"drizzle-orm": "^0.45.2",
 		"postgres": "^3.4.9",
+		"resend": "^6.12.3",
 		"tailwind-merge": "^3.6.0",
 		"tailwindcss": "^4.3.0"
 	}

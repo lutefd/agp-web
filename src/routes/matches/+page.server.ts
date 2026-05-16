@@ -8,8 +8,9 @@ import { desc, eq } from 'drizzle-orm';
 export const load = async (event) => {
 	const user = await requireUser(event);
 	const league = await getCurrentLeague();
-	await requireLeagueMember(user.id, league.id);
+	const member = await requireLeagueMember(user.id, league.id);
 	return {
+		member,
 		matches: await db.query.matches.findMany({
 			where: eq(matches.leagueId, league.id),
 			orderBy: [desc(matches.playedAt)]
