@@ -3,18 +3,25 @@ import { db } from '$lib/server/db';
 import { leagueMembers, matches, ratingEvents } from '$lib/server/db/schema';
 import { confirmMatch } from '$lib/server/domain/matches/confirm-match';
 import { disputeMatch } from '$lib/server/domain/matches/dispute-match';
+import { canConfirmMatch } from '$lib/server/permissions/matches';
 import { error, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 
 export const load = async (event) => {
-	await requireUser(event);
+	const user = await requireUser(event);
 	const match = await db.query.matches.findFirst({ where: eq(matches.id, event.params.id) });
 	if (!match) error(404, 'Partida não encontrada.');
+	const members = await db.query.leagueMembers.findMany({
+		where: eq(leagueMembers.leagueId, match.leagueId)
+	});
+	const playerOne = members.find((member) => member.id === match.playerOneMemberId);
+	const playerTwo = members.find((member) => member.id === match.playerTwoMemberId);
+	const canReview =
+		playerOne && playerTwo ? canConfirmMatch(user, match, playerOne, playerTwo) : false;
 	return {
 		match,
-		members: await db.query.leagueMembers.findMany({
-			where: eq(leagueMembers.leagueId, match.leagueId)
-		}),
+		canReview,
+		members,
 		ratingEvents: await db.query.ratingEvents.findMany({
 			where: eq(ratingEvents.matchId, match.id)
 		})
