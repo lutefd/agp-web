@@ -1,0 +1,21 @@
+import { setUserSession, upsertLocalUser } from '$lib/server/auth/require-user';
+import { workos } from '$lib/server/auth/workos';
+import { WORKOS_CLIENT_ID } from '$env/static/private';
+import { error, redirect } from '@sveltejs/kit';
+
+export const GET = async (event) => {
+	const code = event.url.searchParams.get('code');
+	if (!code) error(400, 'Código de autenticação ausente.');
+
+	const result = await workos.userManagement.authenticateWithCode({ clientId: WORKOS_CLIENT_ID, code });
+	const profile = result.user;
+	const user = await upsertLocalUser({
+		workosUserId: profile.id,
+		email: profile.email,
+		name: [profile.firstName, profile.lastName].filter(Boolean).join(' ') || profile.email,
+		avatarUrl: profile.profilePictureUrl ?? null
+	});
+
+	setUserSession(event, user.id);
+	redirect(302, '/leaderboard');
+};
